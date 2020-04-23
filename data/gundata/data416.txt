@@ -1,0 +1,4 @@
+classes=1
+train=data/gundata/train416/files.txt
+valid=data/gundata/test416/files.txt
+names=data/gundata/names.txt
