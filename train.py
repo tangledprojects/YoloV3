@@ -305,9 +305,7 @@ def train():
 
         # Update scheduler
         scheduler.step()
-        print("***************************************************************")
-        for k  in hyp.keys():
-          print("{} : {}".format(k,hyp[k])) 
+        print(f"giou = {hyp['giou']}, cls= {hyp['cls']}, obj = {hyp['obj']}")
         # Process epoch results
         ema.update_attr(model)
         final_epoch = epoch + 1 == epochs
