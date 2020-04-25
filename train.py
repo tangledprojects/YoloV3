@@ -91,7 +91,7 @@ def train():
         os.remove(f)
 
     # Initialize model
-    model = Darknet(cfg).to(device)
+    model = Darknet(cfg, mean=data_dict['mean'], std=data_dict['std']).to(device)
 
     # Optimizer
     pg0, pg1, pg2 = [], [], []  # optimizer parameter groups
@@ -410,8 +410,6 @@ if __name__ == '__main__':
     parser.add_argument('--device', default='', help='device id (i.e. 0 or 0,1 or cpu)')
     parser.add_argument('--adam', action='store_true', help='use adam optimizer')
     parser.add_argument('--single-cls', action='store_true', help='train as single-class dataset')
-    parser.add_argument('--mean', type=list, help='mean of dataset')
-    parser.add_argument('--std', type=list, help='std of dataset')
     parser.add_argument('--savepath', type=str, default = wdir, help='path to save the model, defaults to weights')
     opt = parser.parse_args()
     if opt.savepath != wdir:

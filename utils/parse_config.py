@@ -65,6 +65,15 @@ def parse_data_cfg(path):
         if line == '' or line.startswith('#'):
             continue
         key, val = line.split('=')
-        options[key.strip()] = val.strip()
+        key = key.strip()
+        val = val.strip()
+        
+        if key in ['mean', 'std']:
+            val = list(map(float, val.split()))
+
+        if key == 'std':
+            val = [lambda x: x*x for x in val]
+            
+        options[key] = val
 
     return options

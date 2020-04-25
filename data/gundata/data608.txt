@@ -2,3 +2,5 @@ classes=1
 train=data/gundata/train608/files.txt
 valid=data/gundata/test608/files.txt
 names=data/gundata/names.txt
+mean=0.53348429 0.51124677 0.49346311
+std=0.35328567 0.34933934 0.35061533
