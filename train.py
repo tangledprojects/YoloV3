@@ -33,7 +33,7 @@ hyp = {'giou': 3.54,  # giou loss gain
        'lrf': 0.0005,  # final learning rate (with cos scheduler)
        'momentum': 0.937,  # SGD momentum
        'weight_decay': 0.000484,  # optimizer weight decay
-       'fl_gamma': 0.0,  # focal loss gamma (efficientDet default is gamma=1.5)
+       'fl_gamma': 1.75,  # focal loss gamma (efficientDet default is gamma=1.5)
        'hsv_h': 0.0138,  # image HSV-Hue augmentation (fraction)
        'hsv_s': 0.678,  # image HSV-Saturation augmentation (fraction)
        'hsv_v': 0.36,  # image HSV-Value augmentation (fraction)
@@ -383,7 +383,8 @@ def train():
 
     return results
 
-
+#416 mean, std: [0.53052073 0.50849256 0.49106059] [0.35259007 0.34803888 0.34939448]
+#608 mean, std: [0.53348429 0.51124677 0.49346311] [0.35328567 0.34933934 0.35061533]
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--epochs', type=int, default=300)  # 500200 batches at bs 16, 117263 COCO images = 273 epochs
@@ -405,6 +406,8 @@ if __name__ == '__main__':
     parser.add_argument('--device', default='', help='device id (i.e. 0 or 0,1 or cpu)')
     parser.add_argument('--adam', action='store_true', help='use adam optimizer')
     parser.add_argument('--single-cls', action='store_true', help='train as single-class dataset')
+    parser.add_argument('--mean', type=list, help='mean of dataset')
+    parser.add_argument('--std', type=list, help='std of dataset')
     opt = parser.parse_args()
     opt.weights = last if opt.resume else opt.weights
     print(opt)

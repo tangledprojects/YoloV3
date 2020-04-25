@@ -5,7 +5,7 @@ from utils.parse_config import *
 ONNX_EXPORT = False
 
 
-def create_modules(module_defs, img_size):
+def create_modules(module_defs, img_size, mean, std):
     # Constructs module list of layer blocks from module configuration in module_defs
 
     img_size = [img_size] * 2 if isinstance(img_size, int) else img_size  # expand if necessary
@@ -54,8 +54,10 @@ def create_modules(module_defs, img_size):
             modules = nn.BatchNorm2d(filters, momentum=0.03, eps=1E-4)
             if i == 0 and filters == 3:  # normalize RGB image
                 # imagenet mean and var https://pytorch.org/docs/stable/torchvision/models.html#classification
-                modules.running_mean = torch.tensor([0.485, 0.456, 0.406])
-                modules.running_var = torch.tensor([0.0524, 0.0502, 0.0506])
+                #modules.running_mean = torch.tensor([0.485, 0.456, 0.406])
+                #modules.running_var = torch.tensor([0.0524, 0.0502, 0.0506])
+                modules.running_mean = torch.tensor(mean)
+                modules.running_var = torch.tensor(std)
 
         elif mdef['type'] == 'maxpool':
             k = mdef['size']  # kernel size
@@ -215,12 +217,11 @@ class YOLOLayer(nn.Module):
 
 class Darknet(nn.Module):
     # YOLOv3 object detection model
-
-    def __init__(self, cfg, img_size=(416, 416), verbose=False):
+    def __init__(self, cfg, img_size=(416, 416), mean=[0.485, 0.456, 0.406], std=[0.0524, 0.0502, 0.0506], verbose=False):
         super(Darknet, self).__init__()
 
         self.module_defs = parse_model_cfg(cfg)
-        self.module_list, self.routs = create_modules(self.module_defs, img_size)
+        self.module_list, self.routs = create_modules(self.module_defs, img_size, mean, std)
         self.yolo_layers = get_yolo_layers(self)
         # torch_utils.initialize_weights(self)
 
