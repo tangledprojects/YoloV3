@@ -20,6 +20,7 @@ except:
 wdir = 'weights' + os.sep  # weights dir
 last = wdir + 'last.pt'
 best = wdir + 'best.pt'
+
 results_file = 'results.txt'
 
 # Hyperparameters https://github.com/ultralytics/yolov3/issues/310
@@ -411,7 +412,13 @@ if __name__ == '__main__':
     parser.add_argument('--single-cls', action='store_true', help='train as single-class dataset')
     parser.add_argument('--mean', type=list, help='mean of dataset')
     parser.add_argument('--std', type=list, help='std of dataset')
+    parser.add_argument('--savepath', type=str, default = wdir, help='path to save the model, defaults to weights')
     opt = parser.parse_args()
+    if opt.savepath != wdir:
+        wdir = opt.savepath  # weights dir
+        last = os.path.join(wdir, 'last.pt')
+        best =  os.path.join(wdir, 'best.pt')
+        
     opt.weights = last if opt.resume else opt.weights
     print(opt)
     opt.img_size.extend([opt.img_size[-1]] * (3 - len(opt.img_size)))  # extend to 3 sizes (min, max, test)
