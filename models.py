@@ -416,7 +416,7 @@ def convert(cfg='cfg/yolov3-spp.cfg', weights='weights/yolov3-spp.weights'):
     # from models import *; convert('cfg/yolov3-spp.cfg', 'weights/yolov3-spp.weights')
 
     # Initialize model
-    model = Darknet(cfg, mean=, std)
+    model = Darknet(cfg)
 
     # Load weights and save
     if weights.endswith('.pt'):  # if PyTorch format
