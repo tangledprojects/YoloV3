@@ -12,6 +12,7 @@ from utils.utils import *
 mixed_precision = True
 try:  # Mixed precision training https://github.com/NVIDIA/apex
     from apex import amp
+    print("mixed precision is working")
 except:
     # print('Apex recommended for mixed precision and faster training: https://github.com/NVIDIA/apex')
     mixed_precision = False  # not installed
@@ -68,6 +69,7 @@ def train():
     assert math.fmod(imgsz_min, gs) == 0, '--img-size %g must be a %g-multiple' % (imgsz_min, gs)
     opt.multi_scale |= imgsz_min != imgsz_max  # multi if different (min, max)
     if opt.multi_scale:
+        print("multi_scale is working")
         if imgsz_min == imgsz_max:
             imgsz_min //= 1.5
             imgsz_max //= 0.667
@@ -252,6 +254,7 @@ def train():
 
             # Multi-Scale training
             if opt.multi_scale:
+                print("multi-scale training is working!!!!!!!!!!!!!")
                 if ni / accumulate % 1 == 0:  #  adjust img_size (67% - 150%) every 1 batch
                     img_size = random.randrange(grid_min, grid_max + 1) * gs
                 sf = img_size / max(imgs.shape[2:])  # scale factor
@@ -302,7 +305,9 @@ def train():
 
         # Update scheduler
         scheduler.step()
-
+        print("***************************************************************")
+        for k  in hyp.keys():
+          print("{} : {}".format(k,hyp[k])) 
         # Process epoch results
         ema.update_attr(model)
         final_epoch = epoch + 1 == epochs
