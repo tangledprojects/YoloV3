@@ -306,7 +306,7 @@ def train():
 
         # Update scheduler
         scheduler.step()
-        print(f"giou = {hyp['giou']}, cls= {hyp['cls']}, obj = {hyp['obj']}")
+        #print(f"giou = {hyp['giou']}, cls= {hyp['cls']}, obj = {hyp['obj']}")
         # Process epoch results
         ema.update_attr(model)
         final_epoch = epoch + 1 == epochs
@@ -418,7 +418,7 @@ if __name__ == '__main__':
         wdir = opt.savepath  # weights dir
         last = os.path.join(wdir, 'last.pt')
         best =  os.path.join(wdir, 'best.pt')
-        
+
     opt.weights = last if opt.resume else opt.weights
     print(opt)
     opt.img_size.extend([opt.img_size[-1]] * (3 - len(opt.img_size)))  # extend to 3 sizes (min, max, test)
