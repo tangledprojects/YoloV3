@@ -35,12 +35,12 @@ hyp = {'giou': 3.54,  # giou loss gain
        'lrf': 0.0005,  # final learning rate (with cos scheduler)
        'momentum': 0.937,  # SGD momentum
        'weight_decay': 0.000484,  # optimizer weight decay
-       'fl_gamma': 0,  # focal loss gamma (efficientDet default is gamma=1.5)
+       'fl_gamma': 1.5,  # focal loss gamma (efficientDet default is gamma=1.5)
        'hsv_h': 0.0138,  # image HSV-Hue augmentation (fraction)
        'hsv_s': 0.678,  # image HSV-Saturation augmentation (fraction)
        'hsv_v': 0.36,  # image HSV-Value augmentation (fraction)
-       'degrees': 0,  # image rotation (+/- deg)
-       'translate': 0,  # image translation (+/- fraction)
+       'degrees': 10,  # image rotation (+/- deg)
+       'translate': 0.05,  # image translation (+/- fraction)
        'scale': 0,  # image scale (+/- gain)
        'shear': 0.641 * 0}  # image shear (+/- deg)
 
