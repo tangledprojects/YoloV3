@@ -2,3 +2,5 @@ classes=1
 train=data/gundata/custom.train
 valid=data/gundata/custom.test
 names=data/gundata/names.txt
+mean=0.42284381 0.39747011 0.37233218
+std=0.32205433 0.31148017 0.30820728

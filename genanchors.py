@@ -132,6 +132,7 @@ def main(argv):
         #line = line.replace('img1','labels')
         line = line.replace('images','labels')        
         line = line.replace('.jpeg','.txt')
+        line = line.replace('.jpg','.txt')
         print(line)
         f2 = open(line)
         for line in f2.readlines():
