@@ -1,0 +1,4 @@
+classes=1
+train=data/gundata/custom.train
+valid=data/gundata/custom.test
+names=data/gundata/names.txt

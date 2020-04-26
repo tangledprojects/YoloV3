@@ -17,7 +17,7 @@ def dataprep2(indir, outdir, minsize, pathprefix):
   for filename in os.listdir(in_img):  
     infile = os.path.join(in_img, filename)
     name, ext = os.path.splitext(filename)
-    scale = 3.5
+    scale = 2
     if not ext: 
         continue
     inlabel = os.path.join(in_lbl, f"{name.lower()}.txt")
@@ -59,7 +59,7 @@ def dataprep(indir, outdir, minsize, pathprefix):
   out_img = os.path.join(outdir, "images")
   out_lbl = os.path.join(outdir, "labels")
 
-  count = 0
+  count = 333
   shapesfile = open(os.path.join(outdir, "shapes.txt"), 'w')
   filedata = open(os.path.join(outdir, "files.txt"), 'w')
 
@@ -72,6 +72,7 @@ def dataprep(indir, outdir, minsize, pathprefix):
     #print(infile, inlabel)
     try:
         img = cv2.imread(infile)
+        img = cv2.resize(img,None,fx=2, fy=2, interpolation = cv2.INTER_CUBIC)
         height, width, channels = img.shape
         if height>= minsize and width >= minsize:
             print(filename, height, width, channels)
@@ -81,8 +82,10 @@ def dataprep(indir, outdir, minsize, pathprefix):
             count += 1
             outfile = os.path.join(out_img, f"image{count:0>4d}{ext}".lower())
             filedata.write(f"{pathprefix}/images/image{count:0>4d}{ext.lower()}\n")
+
             outlabel = os.path.join(out_lbl, f"image{count:0>4d}.txt")
-            shutil.copy(infile, outfile) 
+            #shutil.copy(infile, outfile) 
+            cv2.imwrite(outfile, img)
             shutil.copy(inlabel, outlabel) 
     except:
         pass
